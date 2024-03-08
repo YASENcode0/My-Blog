@@ -110,3 +110,7 @@ body {
   background-color: white;
   color: #37474f;
 }
+.errMsg{
+  color: red;
+  font-weight: 500;
+}
