@@ -9,6 +9,16 @@ import PopUpCreatePst from "./PopUpCreatePst";
 export default function Home() {
   const [posts, setPosts] = useState([{}]);
   const { user } = useContext(userContext);
+  const [commentInput, setCommentInput] = useState("");
+
+  function addComment(postId) {
+    const comment = {
+      user: user.name,
+      comment: commentInput,
+      postId: postId,
+    };
+    console.log(comment);
+  }
 
   useEffect(() => {
     axios.get("/getposts").then((response) => {
@@ -19,8 +29,34 @@ export default function Home() {
 
   const allPosts = posts.map((post) => {
     return (
-      <div key={post._id}>
-        <Post post={post} />
+      <div
+        onChange={() => {
+          console.log(post._id);
+        }}
+        key={post._id}
+      >
+        <Post
+          post={post}
+          comment={
+            <div className="commentSpace">
+              <input
+                value={commentInput}
+                className="comment"
+                onChange={(e) => {
+                  setCommentInput(e.target.value);
+                }}
+              />
+              <button
+                onClick={() => {
+                  addComment(post._id);
+                }}
+                className="commentBtn"
+              >
+                add
+              </button>
+            </div>
+          }
+        />
       </div>
     );
   });
@@ -30,7 +66,7 @@ export default function Home() {
       <Loading />
       <NavBar />
       <button id="addPostBtn">add</button>
-      <PopUpCreatePst/>
+      <PopUpCreatePst />
       <div id="HomeDiv">{allPosts}</div>
     </div>
   );

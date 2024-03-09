@@ -100,3 +100,17 @@ app.get("/getposts", async (req, res) => {
     res.status(500).send("err get user " + err);
   }
 });
+//comments
+app.post("/addcomment", async (req, res) => {
+  try {
+    const { postId, user, comment } = req.body;
+    const data = await post.findOne({ _id: postId });
+    const newComment = { user, comment };
+    
+    data.comments.push(newComment);
+    data.save()
+    res.json(data);
+  } catch (err) {
+    res.status(500).send("err get user " + err);
+  }
+});
