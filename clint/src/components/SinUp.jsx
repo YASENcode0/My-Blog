@@ -1,17 +1,24 @@
-import React, { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { userContext } from "../contexts/UserContext";
 
 export default function SinUp() {
+  const { user } = useContext(userContext);
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, []);
   const navigate = useNavigate();
-
   const [errMsg, setErrMsg] = useState("");
   const [newUser, setNewUser] = useState({
     name: "",
     email: "",
     password: "",
   });
+
   function clearMsg() {
     setErrMsg("");
   }

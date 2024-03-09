@@ -1,11 +1,18 @@
-import React from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import SinUp from "./SinUp";
+import { userContext } from "../contexts/UserContext";
 
 export default function NavBar() {
   const navigate = useNavigate();
+  const { user, setUser } = useContext(userContext);
 
-  function SinOut() {}
+  function SinOut() {
+    localStorage.removeItem("user");
+    setUser({});
+    navigate("/login");
+  }
+
   return (
     <div id="navbar">
       <div id="navbarText">
@@ -20,7 +27,7 @@ export default function NavBar() {
       </div>
       <div className="btnGrope">
         <button
-          className="btnGropeLog"
+          className={`btnGropeLog ${user ? "hide" : ""}`}
           onClick={() => {
             navigate("/login");
           }}
@@ -28,14 +35,17 @@ export default function NavBar() {
           Log In
         </button>
         <button
-          className="btnGropeLog"
+          className={`btnGropeLog ${user ? "hide" : ""}`}
           onClick={() => {
             navigate("/signup");
           }}
         >
           Sign Up
         </button>
-        <button className="btnGropeLog hide" onClick={SinOut}>
+        <button
+          className={`btnGropeLog ${user ? "" : "hide"}`}
+          onClick={SinOut}
+        >
           sign out
         </button>
       </div>

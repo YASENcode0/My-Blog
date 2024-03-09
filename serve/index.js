@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const user = require("./models/user");
+const post = require("./models/post");
 const { v4: nextid } = require("uuid");
 
 const app = express();
@@ -60,5 +61,40 @@ app.post("/login", (req, res) => {
     });
   } catch (err) {
     res.status(500).send("err log in " + err);
+  }
+});
+
+app.post("/getuser", (req, res) => {
+  try {
+    const { email } = req.body;
+    user.findOne({ email }).then((response) => {
+      console.log(response);
+      res.json({ data: response });
+    });
+  } catch (err) {
+    res.status(500).send("err get user " + err);
+  }
+});
+/////posts
+
+app.post("/newpost", async (req, res) => {
+  try {
+    const { id, title, content,user } = req.body;
+    const newPost = new post();
+    newPost.id = id;
+    newPost.title = title;
+    newPost.connect = content;
+    newPost.user = user;
+    await newPost.save();
+    res.json(newPost);
+  } catch (err) {
+    res.status(500).send("err get user " + err);
+  }
+});
+
+app.get("/getposts", (req, res) => {
+  try {
+  } catch (err) {
+    res.status(500).send("err get user " + err);
   }
 });

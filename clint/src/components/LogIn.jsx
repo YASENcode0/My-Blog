@@ -1,11 +1,18 @@
-import React, { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-export default function LogIn() {
-  const navigate = useNavigate();
+import { userContext } from "../contexts/UserContext";
 
+export default function LogIn() {
+  const { getUserFromDb, setLoading, user } = useContext(userContext);
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, []);
+  const navigate = useNavigate();
   const [errMsg, setErrMsg] = useState("");
   const [logUser, setLogUser] = useState({
     email: "",
@@ -18,9 +25,11 @@ export default function LogIn() {
 
   async function LogIn() {
     if (logUser.email !== "" && logUser.password !== "") {
+      setLoading(true);
       await axios.post("/login", logUser).then((response) => {
         console.log(response);
         if (response.data.msg === 1) {
+          getUserFromDb(logUser.email);
           navigate("/");
         } else {
           setErrMsg(response.data.msg);
