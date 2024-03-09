@@ -35,7 +35,6 @@ function App() {
   return (
     <userContext.Provider value={{ getUserFromDb, loading, setLoading, user,setUser }}>
       <Router>
-        <h1>{user?.name}</h1>
         <div className="App">
           {/* Routers */}
           <Routes>

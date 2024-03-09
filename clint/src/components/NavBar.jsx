@@ -21,6 +21,7 @@ export default function NavBar() {
           src="https://definet.de/wp-content/uploads/2019/08/das-feld-ist-bestellt.jpg"
           alt="icon"
         />
+        <h3 style={{color:"orange"}}>{user?.name}</h3>
         <h3 className="barBtn">hello</h3>
         <h3 className="barBtn">hello</h3>
         <h3 className="barBtn">hello</h3>

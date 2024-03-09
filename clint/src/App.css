@@ -148,8 +148,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: antiquewhite;
+  /* background-color: antiquewhite; */
   overflow: hidden;
+  position: relative;
 }
 .post {
   background-color: #78909c;
@@ -191,4 +192,18 @@ body {
   background-color: #37474f;
   border: none;
   height: 0.3vh;
+}
+
+#addPostBtn{
+  background-color: #b0bec5;
+  display: flex;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  margin: 3vh;
+  border-radius: 50%;
+  width: 5vh;
+  height: 5vh;
+  align-items: center;
+  justify-content: center;
 }

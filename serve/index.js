@@ -79,11 +79,11 @@ app.post("/getuser", (req, res) => {
 
 app.post("/newpost", async (req, res) => {
   try {
-    const { id, title, content,user } = req.body;
+    const { id, title, content, user } = req.body;
     const newPost = new post();
     newPost.id = id;
     newPost.title = title;
-    newPost.connect = content;
+    newPost.content = content;
     newPost.user = user;
     await newPost.save();
     res.json(newPost);
@@ -92,8 +92,10 @@ app.post("/newpost", async (req, res) => {
   }
 });
 
-app.get("/getposts", (req, res) => {
+app.get("/getposts", async (req, res) => {
   try {
+    const allPosts = await post.find();
+    res.json(allPosts);
   } catch (err) {
     res.status(500).send("err get user " + err);
   }
