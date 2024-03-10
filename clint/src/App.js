@@ -12,6 +12,7 @@ import { userContext } from "./contexts/UserContext";
 function App() {
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(false);
+  const [popUpPost, setPopUpPost] = useState(false);
 
   async function getUserFromDb(email) {
     await axios.post("/getuser", { email }).then((response) => {
@@ -33,7 +34,17 @@ function App() {
   }, []);
 
   return (
-    <userContext.Provider value={{ getUserFromDb, loading, setLoading, user,setUser }}>
+    <userContext.Provider
+      value={{
+        getUserFromDb,
+        loading,
+        setLoading,
+        user,
+        setUser,
+        popUpPost,
+        setPopUpPost,
+      }}
+    >
       <Router>
         <div className="App">
           {/* Routers */}
