@@ -4,7 +4,8 @@ import { useState } from "react";
 import axios from "axios";
 
 export default function PopUpCreatePst() {
-  const { user, popUpPost, setPopUpPost } = useContext(userContext);
+  const { user, popUpPost, setPopUpPost, postsAll, setPostsAll } =
+    useContext(userContext);
   const [post, setPost] = useState({
     title: "",
     content: "",
@@ -25,6 +26,8 @@ export default function PopUpCreatePst() {
     axios.post("/newpost", postToSend).then((response) => {
       console.log(response);
     });
+    setPopOf();
+    setPostsAll(postsAll + 1);
   }
   if (popUpPost) {
     return (
@@ -44,8 +47,6 @@ export default function PopUpCreatePst() {
             onChange={(e) => {
               setPost({ ...post, content: e.target.value });
             }}
-            rows="5"
-            cols="50"
             placeholder="content"
           ></textarea>
           <div className="BtnCreatePost">

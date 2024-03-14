@@ -6,9 +6,10 @@ import { useNavigate } from "react-router-dom";
 import { userContext } from "../contexts/UserContext";
 
 export default function LogIn() {
-  const { getUserFromDb, setLoading, user } = useContext(userContext);
+  const { getUserFromDb, setLoading, user, userOn, setUserOn } =
+    useContext(userContext);
   useEffect(() => {
-    if (user) {
+    if (userOn) {
       navigate("/");
     }
   }, []);
@@ -30,6 +31,7 @@ export default function LogIn() {
         console.log(response);
         if (response.data.msg === 1) {
           getUserFromDb(logUser.email);
+          setUserOn(true);
           navigate("/");
         } else {
           setErrMsg(response.data.msg);

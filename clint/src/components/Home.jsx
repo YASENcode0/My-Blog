@@ -7,30 +7,31 @@ import { userContext } from "../contexts/UserContext";
 import PopUpCreatePst from "./PopUpCreatePst";
 
 import sendIcon from "../assets/pencil.png";
+import PoupComment from "./PoupComment";
 
 export default function Home() {
   const [posts, setPosts] = useState([{}]);
-  const { user, popUpPost, setPopUpPost } = useContext(userContext);
-  const [commentInput, setCommentInput] = useState("");
+  const {
+    user,
+    popUpPost,
+    setPopUpPost,
+    setPostId,
+    setPopUpComment,
+    postsAll,
+    userOn,
+    setLoading,
+  } = useContext(userContext);
 
-  function addComment(postId) {
-    const comment = {
-      user: user.name,
-      comment: commentInput,
-      postId: postId,
-    };
-    console.log(comment);
-    axios.post("/addcomment", comment).then((response) => {
-      console.log(response);
-    });
-  }
-
+  useEffect(() => {
+    setLoading(false);
+    console.log("hi user");
+  }, []);
   useEffect(() => {
     axios.get("/getposts").then((response) => {
       console.log(response.data);
       setPosts(response.data);
     });
-  }, []);
+  }, [postsAll]);
 
   function popUpOnOf() {
     setPopUpPost(!popUpPost);
@@ -46,20 +47,15 @@ export default function Home() {
       >
         <Post
           post={post}
+          currantUser={user.name}
           comment={
             <div className="commentSpace">
-              <input
-                value={commentInput}
-                className="comment"
-                onChange={(e) => {
-                  setCommentInput(e.target.value);
-                }}
-              />
               <button
                 onClick={() => {
-                  addComment(post._id);
+                  setPostId(post._id);
+                  setPopUpComment(true);
                 }}
-                className="commentBtn"
+                className={`commentBtn ${userOn ? "" : "hide"}`}
               >
                 ad
               </button>
@@ -74,12 +70,13 @@ export default function Home() {
     <div>
       <Loading />
       <NavBar />
-      <div id="addPostBtnDiv">
+      <div className={`${userOn ? "" : "hide"}`} id="addPostBtnDiv">
         <button id="addPostBtn" onClick={popUpOnOf}>
           <img src={sendIcon} alt="add" />
         </button>
       </div>
       <PopUpCreatePst />
+      <PoupComment />
       <div id="HomeDiv">{allPosts}</div>
     </div>
   );
