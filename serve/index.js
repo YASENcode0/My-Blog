@@ -10,7 +10,7 @@ const port = 3001 || 5000;
 app.use(express.json());
 
 mongoose
-  .connect("mongodb://127.0.0.1:27017/blogs")
+  .connect("mongodb+srv://steve:8AHKISlpREHyW9HI@firstcluster.d4jodqk.mongodb.net/blogs?retryWrites=true&w=majority&appName=firstCluster")
   .then(() => {
     app.listen(port, () => {
       console.log("connection to mongodb on port ", port);
